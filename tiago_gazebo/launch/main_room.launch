@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<launch>
+  <arg default="steel" name="robot" />          
+  <arg default="-x 0.71 -y -0.217 -z -0.001 -R 0.0 -P 0.0 -Y 3.047" name="gzpose" />
+  <arg default="false" name="gui" />
+  <arg default="true" name="pause" />
+  <arg default="false" name="debug" />
+
+  <env name="GAZEBO_MODEL_PATH" value="$(find tiago_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)" />
+
+  
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find tiago_gazebo)/worlds/demo_tiago_kitchen.world" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="debug" value="$(arg debug)" />
+  </include>
+
+  
+  <include file="$(find tiago_gazebo)/launch/tiago_spawn.launch">
+    <arg name="robot" value="$(arg robot)" />
+    <arg name="gzpose" value="$(arg gzpose)" />
+  </include>
+
+  
+  <include file="$(find tiago_bringup)/launch/tiago_bringup.launch">
+    <arg name="robot" value="$(arg robot)" />
+  </include>
+
+  
+</launch>
